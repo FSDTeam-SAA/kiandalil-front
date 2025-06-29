@@ -8,25 +8,25 @@ const services = [
     id: 1,
     title: "Rental Management",
     description: "Lorem Ipsum has been the industry's standard dummy",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/service1.jpg",
   },
   {
     id: 2,
     title: "Property Sales",
     description: "Lorem Ipsum has been the industry's standard dummy",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/service2.jpg",
   },
   {
     id: 3,
     title: "Maintenance & Repair",
     description: "Lorem Ipsum has been the industry's standard dummy",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/service3.jpg",
   },
   {
     id: 4,
     title: "Consultation",
     description: "Lorem Ipsum has been the industry's standard dummy",
-    image: "/placeholder.svg?height=400&width=600",
+    image: "/service4.jpg",
   },
 ]
 
@@ -62,7 +62,7 @@ export default function ServicesSection() {
                 src={service.image || "/placeholder.svg"}
                 alt={service.title}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                className="object-cover w-[472px] h-[452px] transition-transform duration-300 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
 
