@@ -286,19 +286,30 @@ export default function PropertyDetailsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="grid grid-cols-2 gap-4 h-96">
-            <div className="relative rounded-2xl overflow-hidden">
+          {/* Dynamic image grid based on number of images */}
+          {property.images.length === 0 ? (
+            <div className="relative h-96 w-full rounded-2xl overflow-hidden bg-gray-100">
               <Image
-                src={property.images[0] || "/placeholder.svg"}
+                src="/placeholder.svg"
+                alt="No images available"
+                fill
+                className="object-cover"
+              />
+            </div>
+          ) : property.images.length === 1 ? (
+            <div className="relative h-96 w-full rounded-2xl overflow-hidden">
+              <Image
+                src={property.images[0]}
                 alt={property.title}
                 fill
                 className="object-cover"
               />
             </div>
-            <div className="grid grid-rows-2 gap-4">
+          ) : property.images.length === 2 ? (
+            <div className="grid grid-cols-2 gap-4 h-96">
               <div className="relative rounded-2xl overflow-hidden">
                 <Image
-                  src={property.images[1] || "/placeholder.svg"}
+                  src={property.images[0]}
                   alt={property.title}
                   fill
                   className="object-cover"
@@ -306,34 +317,58 @@ export default function PropertyDetailsPage() {
               </div>
               <div className="relative rounded-2xl overflow-hidden">
                 <Image
-                  src={property.images[2] || "/placeholder.svg"}
+                  src={property.images[1]}
                   alt={property.title}
                   fill
                   className="object-cover"
                 />
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-4 h-96">
+              <div className="relative rounded-2xl overflow-hidden">
+                <Image
+                  src={property.images[0]}
+                  alt={property.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="grid grid-rows-2 gap-4">
+                <div className="relative rounded-2xl overflow-hidden">
+                  <Image
+                    src={property.images[1]}
+                    alt={property.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="relative rounded-2xl overflow-hidden">
+                  <Image
+                    src={property.images[2]}
+                    alt={property.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
-          <div className="absolute bottom-4 left-4 flex space-x-2">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => setShowImageModal(true)}
-              className="bg-white/90 hover:bg-white"
-            >
-              <Images className="w-4 h-4 mr-2" />
-              {property.images.length} Photos
-            </Button>
-            {/* <Button
-              variant="secondary"
-              size="sm"
-              className="bg-white/90 hover:bg-white"
-            >
-              <Map className="w-4 h-4 mr-2" />
-              Map
-            </Button> */}
-          </div>
+          {/* Photos button - only show if there are images */}
+          {property.images.length > 0 && (
+            <div className="absolute bottom-4 left-4 flex space-x-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => setShowImageModal(true)}
+                className="bg-white/90 hover:bg-white"
+              >
+                <Images className="w-4 h-4 mr-2" />
+                {property.images.length} Photos
+              </Button>
+            </div>
+          )}
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

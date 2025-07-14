@@ -32,7 +32,6 @@ export const authOptions: NextAuthOptions = {
             throw new Error(result?.message || "Login failed");
           }
 
-
           if (result?.success && result?.data?.accessToken) {
             return {
               id: result.data._id,
@@ -77,7 +76,6 @@ export const authOptions: NextAuthOptions = {
               body: JSON.stringify({
                 name: user.name,
                 email: user.email,
-                imageLink: user.image,
                 gLogin: true,
               }),
             }

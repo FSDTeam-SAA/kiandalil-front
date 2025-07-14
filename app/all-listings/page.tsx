@@ -244,11 +244,11 @@ function AllListingsContent() {
     e.stopPropagation();
     if (property.whatsappNum) {
       const message = encodeURIComponent(
-        `Hi ${property.userId.name}, I'm interested in the property: ${
+        `Hi ${property?.userId?.name}, I'm interested in the property: ${
           property.title
-        } - $${property.price?.toLocaleString()}. Can you provide more details?`
+        } - $${property?.price?.toLocaleString()}. Can you provide more details?`
       );
-      const whatsappUrl = `https://wa.me/${property.whatsappNum}?text=${message}`;
+      const whatsappUrl = `https://wa.me/${property?.whatsappNum}?text=${message}`;
       window.open(whatsappUrl, "_blank");
     } else {
       toast.error("WhatsApp number not available for this property");
@@ -416,6 +416,102 @@ function AllListingsContent() {
     const isInWishlist = wishlistMap.has(property._id);
     const { data: session } = useSession();
 
+    // Determine image layout based on number of images
+    const getImageLayout = () => {
+      const imageCount = property.images.length;
+
+      if (imageCount === 0) {
+        return (
+          <div className="relative h-full w-full">
+            <Image
+              src="/placeholder.svg?height=400&width=300"
+              alt="No images available"
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+        );
+      }
+
+      if (imageCount === 1) {
+        return (
+          <div className="relative h-full w-full">
+            <Image
+              src={property.images[0]}
+              alt={property.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+        );
+      }
+
+      if (imageCount === 2) {
+        return (
+          <div className="grid grid-cols-2 gap-1 h-full">
+            <div className="relative">
+              <Image
+                src={property.images[0]}
+                alt={property.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src={property.images[1]}
+                alt={property.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+              />
+            </div>
+          </div>
+        );
+      }
+
+      // Default layout for 3+ images
+      return (
+        <div className="grid grid-cols-2 gap-1 h-[280px]">
+          {/* Main large image */}
+          <div className="relative row-span-2">
+            <Image
+              src={property.images[0]}
+              alt={property.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+            />
+          </div>
+
+          {/* Two smaller images */}
+          <div className="grid grid-rows-2 gap-1 h-[280px]">
+            <div className="relative">
+              <Image
+                src={property.images[1]}
+                alt={property.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 12vw, 8vw"
+              />
+            </div>
+            <div className="relative">
+              <Image
+                src={property.images[2]}
+                alt={property.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 25vw, (max-width: 1200px) 12vw, 8vw"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     return (
       <motion.div
         className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 md:h-[280px]"
@@ -437,49 +533,7 @@ function AllListingsContent() {
               {property.images.length} photos
             </div>
 
-            <div className="grid grid-cols-2 gap-1 h-[280px]">
-              {/* Main large image */}
-              <div className="relative row-span-2">
-                <Image
-                  src={
-                    property.images[0] ||
-                    "/placeholder.svg?height=400&width=300"
-                  }
-                  alt={property.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
-                />
-              </div>
-
-              {/* Two smaller images */}
-              <div className="grid grid-rows-2 gap-1 h-[280px]">
-                <div className="relative">
-                  <Image
-                    src={
-                      property.images[1] ||
-                      "/placeholder.svg?height=200&width=150"
-                    }
-                    alt={property.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 25vw, (max-width: 1200px) 12vw, 10vw"
-                  />
-                </div>
-                <div className="relative">
-                  <Image
-                    src={
-                      property.images[2] ||
-                      "/placeholder.svg?height=200&width=150"
-                    }
-                    alt={property.title}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 25vw, (max-width: 1200px) 12vw, 10vw"
-                  />
-                </div>
-              </div>
-            </div>
+            {getImageLayout()}
           </div>
 
           {/* Property Details - Clickable for details */}
@@ -558,7 +612,7 @@ function AllListingsContent() {
                     <div className="font-medium text-gray-800 truncate">
                       {property.userId.name}
                     </div>
-                    <div className="text-xs text-gray-500">Agent</div>
+                    {/* <div className="text-xs text-gray-500">Agent</div> */}
                   </div>
                 </div>
 

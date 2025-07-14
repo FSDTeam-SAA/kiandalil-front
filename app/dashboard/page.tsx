@@ -97,12 +97,12 @@ export default function Dashboard() {
                                 </TableHeader>
                                 <TableBody>
                                     {approvedProperties?.slice(0, 5).map((property: Property) => (
-                                        <TableRow key={property._id}>
-                                            <TableCell>{property._id.slice(-4)}</TableCell>
+                                        <TableRow key={property?._id}>
+                                            <TableCell>{property?._id.slice(-4)}</TableCell>
                                             <TableCell>{formatDate(property.createdAt)}</TableCell>
-                                            <TableCell>{property.userId.name}</TableCell>
-                                            <TableCell>{property.address}, {property.city}</TableCell>
-                                            <TableCell>1 {property.type}</TableCell>
+                                            <TableCell>{property?.userId?.name}</TableCell>
+                                            <TableCell>{property?.address}, {property?.city}</TableCell>
+                                            <TableCell>1 {property?.type}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>

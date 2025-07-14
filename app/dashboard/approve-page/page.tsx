@@ -112,14 +112,14 @@ export default function ApprovePage() {
                 <Avatar className="w-32 h-20 flex-shrink-0 rounded-md object-cover">
                   <AvatarImage src={property.images[0]} />
                   <AvatarFallback>
-                    {property.userId.name.charAt(0)}
+                    {property?.userId?.name.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
 
                 <div className="flex-1 min-w-0">
                   <div className="mb-1">
                     <h3 className="font-semibold text-sm">
-                      {property.userId.name}
+                      {property?.userId?.name}
                     </h3>
                     <p className="text-xs text-gray-500">
                       Join on {formatDate(property.createdAt)}

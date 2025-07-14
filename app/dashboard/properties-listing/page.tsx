@@ -88,8 +88,8 @@ export default function PropertiesPage() {
                                     <TableCell>{property.type}</TableCell>
                                     <TableCell>
                                         <div>
-                                            <p className="font-medium">{property.userId.name}</p>
-                                            <p className="text-sm text-gray-500">{property.userId.email}</p>
+                                            <p className="font-medium">{property?.userId.name}</p>
+                                            <p className="text-sm text-gray-500">{property?.userId.email}</p>
                                         </div>
                                     </TableCell>
                                     <TableCell>
