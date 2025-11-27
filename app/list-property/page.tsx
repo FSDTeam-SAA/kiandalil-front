@@ -79,6 +79,13 @@ export default function ListPropertyPage() {
   const { data: session, status } = useSession();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [priceWarning, setPriceWarning] = useState<string>("");
+
+  const [unitWarning, setunitWarning] = useState<string>("");
+  const [bedWarning, setbedWarning] = useState<string>("");
+  const [bathWarning, setbathWarning] = useState<string>("");
+  const [sqrFtWarning, setsqrFtWarning] = useState<string>("");
+
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
     defaultValues: {
@@ -309,11 +316,22 @@ export default function ListPropertyPage() {
                         </FormLabel>
                         <FormControl>
                           <Input
+                            type="text"
                             placeholder="Enter the current asking price"
                             {...field}
+                            onChange={(e) => {
+                              field.onChange(e); // keep React Hook Form updated
+                              // Check for special characters
+                              if (/[^0-9.]/.test(e.target.value)) {
+                                setPriceWarning("Warning: Avoid special characters like $, @, , etc.");
+                              } else {
+                                setPriceWarning(""); // clear warning if input is valid
+                              }
+                            }}
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage /> {/* keeps normal error messages */}
+                        {priceWarning && <p className="text-red-600 text-sm mt-1">{priceWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -428,14 +446,14 @@ export default function ListPropertyPage() {
                                           onCheckedChange={(checked) => {
                                             return checked
                                               ? field.onChange([
-                                                  ...field.value,
-                                                  feature,
-                                                ])
+                                                ...field.value,
+                                                feature,
+                                              ])
                                               : field.onChange(
-                                                  field.value?.filter(
-                                                    (value) => value !== feature
-                                                  )
-                                                );
+                                                field.value?.filter(
+                                                  (value) => value !== feature
+                                                )
+                                              );
                                           }}
                                         />
                                       </FormControl>
@@ -502,8 +520,22 @@ export default function ListPropertyPage() {
                           type="number"
                           placeholder="Enter number of units, if applicable."
                           {...field}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            field.onChange(e.target.value === "" ? "" : value);
+
+                            if (value <= 0) {
+                              setunitWarning("Please enter a number greater than 0.");
+                            } else {
+                              setunitWarning("");
+                            }
+                          }}
+                          value={field.value === null ? "" : field.value}
+                          style={{ MozAppearance: "textfield" }}
+                          className="no-spinner"
                         />
                         <FormMessage />
+                        {unitWarning && <p className="text-red-600 text-sm mt-1">{unitWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -516,12 +548,28 @@ export default function ListPropertyPage() {
                         <FormLabel className="lg:text-base text-sm">
                           Bedrooms
                         </FormLabel>
-                        <Input
-                          type="number"
-                          placeholder="Number of bedrooms."
-                          {...field}
-                        />
+                        <FormControl>
+                          <Input
+                            type="number"
+                            placeholder="Number of bedrooms."
+                            {...field}
+                            onChange={(e) => {
+                              const value = Number(e.target.value);
+                              field.onChange(e.target.value === "" ? "" : value);
+
+                              if (value <= 0) {
+                                setbedWarning("Please enter a number greater than 0.");
+                              } else {
+                                setbedWarning("");
+                              }
+                            }}
+                            value={field.value === null ? "" : field.value}
+                            style={{ MozAppearance: "textfield" }}
+                            className="no-spinner"
+                          />
+                        </FormControl>
                         <FormMessage />
+                        {bedWarning && <p className="text-red-600 text-sm mt-1">{bedWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -540,8 +588,22 @@ export default function ListPropertyPage() {
                           type="number"
                           placeholder="Number of bathrooms."
                           {...field}
+                          onChange={(e) => {
+                            const value = Number(e.target.value);
+                            field.onChange(e.target.value === "" ? "" : value);
+
+                            if (value <= 0) {
+                              setbathWarning("Please enter a number greater than 0.");
+                            } else {
+                              setbathWarning("");
+                            }
+                          }}
+                          value={field.value === null ? "" : field.value}
+                          style={{ MozAppearance: "textfield" }}
+                          className="no-spinner"
                         />
                         <FormMessage />
+                        {bathWarning && <p className="text-red-600 text-sm mt-1">{bathWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -559,9 +621,23 @@ export default function ListPropertyPage() {
                             type="number"
                             placeholder="Enter total square footage."
                             {...field}
+                            onChange={(e) => {
+                              const value = Number(e.target.value);
+                              field.onChange(e.target.value === "" ? "" : value);
+
+                              if (value <= 0) {
+                                setsqrFtWarning("Please enter a number greater than 0.");
+                              } else {
+                                setsqrFtWarning("");
+                              }
+                            }}
+                            value={field.value === null ? "" : field.value}
+                            style={{ MozAppearance: "textfield" }}
+                            className="no-spinner"
                           />
                         </FormControl>
                         <FormMessage />
+                        {sqrFtWarning && <p className="text-red-600 text-sm mt-1">{sqrFtWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -597,11 +673,10 @@ export default function ListPropertyPage() {
                     Upload Property Images
                   </FormLabel>
                   <div
-                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                      dragActive
-                        ? "border-[#191919] bg-gray-50"
-                        : "border-gray-300"
-                    }`}
+                    className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${dragActive
+                      ? "border-[#191919] bg-gray-50"
+                      : "border-gray-300"
+                      }`}
                     onDragEnter={handleDrag}
                     onDragLeave={handleDrag}
                     onDragOver={handleDrag}
@@ -772,7 +847,7 @@ export default function ListPropertyPage() {
                 <Button
                   type="submit"
                   className="w-full bg-[#191919] hover:bg-[#2a2a2a] text-white py-3"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || unitWarning !== "" || bedWarning !== "" || bathWarning !== "" || sqrFtWarning !== "" || priceWarning !== ""}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Your Listing"}
                 </Button>

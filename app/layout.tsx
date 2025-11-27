@@ -7,7 +7,7 @@ import QueryProvider from "@/providers/query-provider";
 import 'react-quill/dist/quill.snow.css';
 
 export const metadata: Metadata = {
-  title: "Hidden Props",
+  title: "Hidden Prop",
   description: "Created with Love by the Hidden Props Team",
   generator: "Created with Love by the Hidden Props Team",
 };
@@ -20,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SessionWrapper>        
+        <SessionWrapper>
           <QueryProvider>
-          {children}
-        </QueryProvider>
+            {children}
+          </QueryProvider>
         </SessionWrapper>
         <Toaster position="top-right" />
       </body>
