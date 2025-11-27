@@ -79,7 +79,7 @@ export default function HeroSection() {
           <Button
             onClick={() =>
               router.push(
-                `${status === "authenticated" ? "/list-property" : "/register"}`
+                `${status === "authenticated" ? "/list-property" : "/login"}`
               )
             }
             className="bg-[#191919] hover:bg-[#191919]/80 text-white h-14 w-full md:w-44 border-2 text-xl rounded-full"

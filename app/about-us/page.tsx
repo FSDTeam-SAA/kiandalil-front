@@ -63,22 +63,6 @@ export default function AboutUsPage() {
               everyone-regardless of size or experience-free access to real
               undervalued deals and the people behind them.
             </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 mb-8">
-              <div>
-                <h4 className="text-3xl font-bold text-[#191919] mb-2">30K+</h4>
-                <p className="text-gray-600">Our Users</p>
-              </div>
-              <div>
-                <h4 className="text-3xl font-bold text-[#191919] mb-2">12K+</h4>
-                <p className="text-gray-600">Satisfied Brand</p>
-              </div>
-              <div>
-                <h4 className="text-3xl font-bold text-[#191919] mb-2">2K+</h4>
-                <p className="text-gray-600">Company List</p>
-              </div>
-            </div>
           </motion.div>
 
           {/* Right Image */}
