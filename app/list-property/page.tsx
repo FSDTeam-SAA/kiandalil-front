@@ -81,7 +81,10 @@ export default function ListPropertyPage() {
 
   const [priceWarning, setPriceWarning] = useState<string>("");
 
-  const [warning, setWarning] = useState<string>("");
+  const [unitWarning, setunitWarning] = useState<string>("");
+  const [bedWarning, setbedWarning] = useState<string>("");
+  const [bathWarning, setbathWarning] = useState<string>("");
+  const [sqrFtWarning, setsqrFtWarning] = useState<string>("");
 
   const form = useForm<PropertyFormValues>({
     resolver: zodResolver(propertySchema),
@@ -522,9 +525,9 @@ export default function ListPropertyPage() {
                             field.onChange(e.target.value === "" ? "" : value);
 
                             if (value <= 0) {
-                              setWarning("Please enter a number greater than 0.");
+                              setunitWarning("Please enter a number greater than 0.");
                             } else {
-                              setWarning("");
+                              setunitWarning("");
                             }
                           }}
                           value={field.value === null ? "" : field.value}
@@ -532,7 +535,7 @@ export default function ListPropertyPage() {
                           className="no-spinner"
                         />
                         <FormMessage />
-                        {warning && <p className="text-red-600 text-sm mt-1">{warning}</p>}
+                        {unitWarning && <p className="text-red-600 text-sm mt-1">{unitWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -555,9 +558,9 @@ export default function ListPropertyPage() {
                               field.onChange(e.target.value === "" ? "" : value);
 
                               if (value <= 0) {
-                                setWarning("Please enter a number greater than 0.");
+                                setbedWarning("Please enter a number greater than 0.");
                               } else {
-                                setWarning("");
+                                setbedWarning("");
                               }
                             }}
                             value={field.value === null ? "" : field.value}
@@ -566,7 +569,7 @@ export default function ListPropertyPage() {
                           />
                         </FormControl>
                         <FormMessage />
-                        {warning && <p className="text-red-600 text-sm mt-1">{warning}</p>}
+                        {bedWarning && <p className="text-red-600 text-sm mt-1">{bedWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -590,9 +593,9 @@ export default function ListPropertyPage() {
                             field.onChange(e.target.value === "" ? "" : value);
 
                             if (value <= 0) {
-                              setWarning("Please enter a number greater than 0.");
+                              setbathWarning("Please enter a number greater than 0.");
                             } else {
-                              setWarning("");
+                              setbathWarning("");
                             }
                           }}
                           value={field.value === null ? "" : field.value}
@@ -600,7 +603,7 @@ export default function ListPropertyPage() {
                           className="no-spinner"
                         />
                         <FormMessage />
-                        {warning && <p className="text-red-600 text-sm mt-1">{warning}</p>}
+                        {bathWarning && <p className="text-red-600 text-sm mt-1">{bathWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -623,9 +626,9 @@ export default function ListPropertyPage() {
                               field.onChange(e.target.value === "" ? "" : value);
 
                               if (value <= 0) {
-                                setWarning("Please enter a number greater than 0.");
+                                setsqrFtWarning("Please enter a number greater than 0.");
                               } else {
-                                setWarning("");
+                                setsqrFtWarning("");
                               }
                             }}
                             value={field.value === null ? "" : field.value}
@@ -634,7 +637,7 @@ export default function ListPropertyPage() {
                           />
                         </FormControl>
                         <FormMessage />
-                        {warning && <p className="text-red-600 text-sm mt-1">{warning}</p>}
+                        {sqrFtWarning && <p className="text-red-600 text-sm mt-1">{sqrFtWarning}</p>}
                       </FormItem>
                     )}
                   />
@@ -844,7 +847,7 @@ export default function ListPropertyPage() {
                 <Button
                   type="submit"
                   className="w-full bg-[#191919] hover:bg-[#2a2a2a] text-white py-3"
-                  disabled={isSubmitting || warning !== "" || priceWarning !== ""}
+                  disabled={isSubmitting || unitWarning !== "" || bedWarning !== "" || bathWarning !== "" || sqrFtWarning !== "" || priceWarning !== ""}
                 >
                   {isSubmitting ? "Submitting..." : "Submit Your Listing"}
                 </Button>
